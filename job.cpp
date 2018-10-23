@@ -1,4 +1,4 @@
-#include "job.hpp"
+#include "main.hpp"
 
 Job::Job(int ID, string Description, int processorsNeeded, int TicksToComplete){
     this->ID = ID;
