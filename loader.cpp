@@ -66,8 +66,8 @@ testLoader::testLoader(int numProcessors) {
 bool testLoader::insertJob(int ID, std::string description, int processors, int ticks) {
     Job newJob(ID, description, processors, ticks);
     this->totalJobs++;
-    cout << this->totalJobs << "\n";
     jobs.push(newJob);
+	return true;
 }
 
 bool testLoader::checkValidity(int processorsNeeded) {
@@ -86,19 +86,21 @@ int testLoader::getNumJobs() {
 
 void testLoader::printActiveJobs() {
     for(auto i = currentJobs.begin(); i != currentJobs.end(); ++i) {
-        cout << "Job #" << i->getID() << "\n";
-        cout << "Description: " << i->getDescription() << "\n";
-        cout << "Processors: " << i->getProcessorsNeeded() << "\t" << "Ticks: " << i->getTicksRemaining() << "\n";
+		cout << *i << "\n";
     }
 }
 
 void testLoader::printAllJobs(const priority_queue<Job, vector<Job>, greater<Job>> &pq) {
-    priority_queue<Job, vector<Job>, greater<Job>> q = pq;
-    cout << "Total Jobs: " << q.size() << "\n";
-    for(int i = 0; i < totalJobs - 1; i++) {
-        cout << q.top() << "\n";
-        q.pop();
-    }
+	if (!currentJobs.empty()) {
+		printActiveJobs();
+	}
+	if (!pq.empty()) {
+		priority_queue<Job, vector<Job>, greater<Job>> q = pq;
+		for (int i = 0; i < totalJobs - 1; i++) {
+			cout << q.top() << "\n";
+			q.pop();
+		}
+	}
 }
 
 priority_queue<Job, vector<Job>, greater<Job>> testLoader::getJobQueue(){
@@ -106,13 +108,13 @@ priority_queue<Job, vector<Job>, greater<Job>> testLoader::getJobQueue(){
 }
 
 void testLoader::activatejob() {
-    bool canAdd;
+    bool canAdd = true;
 
-    while(canAdd) {
-        Job toAdd = this->getJobQueue().top();
+    while(canAdd && !jobs.empty()) {
+        Job toAdd = jobs.top();
         if(toAdd.getProcessorsNeeded() < totalProcessors-usedProcessors) {
             currentJobs.push_back(toAdd);
-            this->getJobQueue().pop();
+			jobs.pop();
         }
         else
             canAdd = false;

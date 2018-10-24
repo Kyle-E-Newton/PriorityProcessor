@@ -13,7 +13,7 @@ class Job {
         void setTicks(int newTicks);
         friend std::ostream &operator<<(std::ostream &output, const Job &J1) {
             Job out = J1;
-            output << "ID: " << out.getID() << " with description " << out.getDescription();
+            output << "ID: " << out.getID() << " with description " << out.getDescription() << " with processors needed: " << out.getProcessorsNeeded();
             return output;
         }
         friend bool operator<(const Job &J1, const Job &J2) {
