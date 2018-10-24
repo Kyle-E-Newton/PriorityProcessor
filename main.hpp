@@ -23,6 +23,7 @@ class testLoader {
         void printAllJobs(const priority_queue<Job, vector<Job>, greater<Job>> &pq);
         void decrementJobs();
         void activatejob();
+		bool hasActiveJobs();
     private:
         priority_queue<Job, vector<Job>, greater<Job>> jobs;
         vector<Job> currentJobs;
