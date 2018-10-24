@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-Job::Job(int ID, string Description, int processorsNeeded, int TicksToComplete){
+Job::Job(int ID, std::string Description, int processorsNeeded, int TicksToComplete){
     this->ID = ID;
     this->description = Description;
     this->processors = processorsNeeded;
@@ -26,14 +26,18 @@ int Job::getID(){
     return this->ID;
 }
 
-string Job::getDescription() {
+std::string Job::getDescription() {
     return this->description;
 }
 
-void Job::setDescription(string newDescription) {
+void Job::setDescription(std::string newDescription) {
     this->description = newDescription;
 }
 
 void Job::setTicks(int newTicks) {
     this->timeToComplete = newTicks;
+}
+
+int Job::getProcessorsNeeded() {
+    return this->processors;
 }

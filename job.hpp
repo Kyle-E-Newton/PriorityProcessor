@@ -3,15 +3,27 @@
 
 class Job {
     public:
-        Job(int ID, string Description, int processorsNeeded, int TicksToComplete);
+        Job(int ID, std::string Description, int processorsNeeded, int TicksToComplete);
         bool removeTick();
         int getTicksRemaining();
         int getID();
-        string getDescription();
-        void setDescription(string newDescription);
+        int getProcessorsNeeded();
+        std::string getDescription();
+        void setDescription(std::string newDescription);
         void setTicks(int newTicks);
+        friend std::ostream &operator<<(std::ostream &output, const Job &J1) {
+            Job out = J1;
+            output << "ID: " << out.getID() << " with description " << out.getDescription();
+            return output;
+        }
+        friend bool operator<(const Job &J1, const Job &J2) {
+            return J1.processors < J2.processors;
+        }
+        friend bool operator>(const Job &J1, const Job &J2) {
+            return J1.processors > J2.processors;
+        }
     private:
-        string description;
+        std::string description;
         int processors;
         int timeToComplete;
         int ID;
