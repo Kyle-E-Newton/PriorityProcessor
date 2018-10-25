@@ -12,6 +12,7 @@ using namespace std;
 
 void printMenu();
 
+//This is the loader class. Originally built as a test, but ultimatley turned into the entire build
 class testLoader {
     public:
         testLoader(int numProcessors);

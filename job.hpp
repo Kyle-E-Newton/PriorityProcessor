@@ -1,6 +1,7 @@
 #pragma once
 #include "main.hpp"
 
+//This Class is a container to contain the Jobs that are being inputted into either storage structure
 class Job {
     public:
         Job(int ID, std::string Description, int processorsNeeded, int TicksToComplete);
@@ -9,8 +10,6 @@ class Job {
         int getID();
         int getProcessorsNeeded();
         std::string getDescription();
-        void setDescription(std::string newDescription);
-        void setTicks(int newTicks);
         friend std::ostream &operator<<(std::ostream &output, const Job &J1) {
             Job out = J1;
             output << "ID: " << out.getID() << " with description " << out.getDescription() << " with processors needed: " << out.getProcessorsNeeded() << " and " << out.getTicksRemaining() << " ticks remaining";

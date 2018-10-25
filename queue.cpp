@@ -1,5 +1,6 @@
-#include "main.hpp"
+#include "queue.hpp"
 
+/*
 int main(void) {
 
     bool isRunning = true;
@@ -55,12 +56,15 @@ int main(void) {
     }
     return 0;
 }
+*/
 
+//Creates a Loader with x amount of processors
 testLoader::testLoader(int numProcessors) {
     this->totalProcessors = numProcessors;
     this->usedProcessors = 0;
 }
 
+//Inserts a job into the storage queue
 bool testLoader::insertJob(int ID, std::string description, int processors, int ticks) {
     Job newJob(ID, description, processors, ticks);
     this->totalJobs++;
@@ -68,6 +72,7 @@ bool testLoader::insertJob(int ID, std::string description, int processors, int 
 	return true;
 }
 
+//Checks the validity of the Job to be processed by checking if there are enough total processors
 bool testLoader::checkValidity(int processorsNeeded) {
     if(processorsNeeded <= totalProcessors){
         return true;
@@ -78,16 +83,19 @@ bool testLoader::checkValidity(int processorsNeeded) {
     }
 }
 
+//Returns the number of total jobs in both queues
 int testLoader::getNumJobs() {
     return this->totalJobs;
 }
 
+//This prints the jobs that are currently in the active queue
 void testLoader::printActiveJobs() {
     for(auto i = currentJobs.begin(); i != currentJobs.end(); ++i) {
 		cout << *i << "\n";
     }
 }
 
+//Prints all jobs that have not been completed
 void testLoader::printAllJobs(const priority_queue<Job, vector<Job>, greater<Job>> &pq) {
 	if (!currentJobs.empty()) {
 		printActiveJobs();
@@ -102,10 +110,12 @@ void testLoader::printAllJobs(const priority_queue<Job, vector<Job>, greater<Job
 	}
 }
 
+//Returns the job Queue
 priority_queue<Job, vector<Job>, greater<Job>> testLoader::getJobQueue(){
     return this->jobs;
 }
 
+//Adds any possible jobs to the active list
 void testLoader::activatejob() {
     bool canAdd = true;
 
@@ -121,6 +131,7 @@ void testLoader::activatejob() {
     }
 }
 
+//Decrements the ticks remaining in any active jobs
 void testLoader::decrementJobs() {
 	vector<Job>::iterator it = currentJobs.begin();
 
@@ -142,6 +153,7 @@ bool testLoader::hasActiveJobs() {
 	return !currentJobs.empty();
 }
 
+//Prints Menu
 void printMenu() {
     cout << "1. Insert New Job" << "\n";
     cout << "2. Do Not Insert a Job" << "\n";
