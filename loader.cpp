@@ -47,17 +47,15 @@ int main(void) {
 			case 5:
 				//cout << "Option 5" << "\n";
 				showMenu = false;
-				if (loader.hasActiveJobs())
-					isRunning = false;
-				
 				break;
 			default:
 				cout << "Invalid Option" << "\n";
 			}
 		}
+		if (!loader.hasActiveJobs() && loader.getJobQueue().empty())
+			isRunning = false;
         loader.decrementJobs();
         loader.activatejob();
-
     }
     return 0;
 }
@@ -130,19 +128,22 @@ void testLoader::activatejob() {
 void testLoader::decrementJobs() {
 	vector<Job>::iterator it = currentJobs.begin();
 
-	for (; it != currentJobs.end(); ) {
-		if (it->removeTick()) {
-			cout << "Job #" << it->getID() << " is finished\n";
-			usedProcessors -= it->getProcessorsNeeded();
-			it = currentJobs.erase(it);
+	if (hasActiveJobs()) {
+		for (; it != currentJobs.end(); ) {
+			if (it->removeTick()) {
+				cout << "Job #" << it->getID() << " is finished\n";
+				usedProcessors -= it->getProcessorsNeeded();
+				it = currentJobs.erase(it);
+			}
+			else
+				++it;
 		}
-		else
-			++it;
 	}
 }
 
+//Returns true if the active jobs list is not empty
 bool testLoader::hasActiveJobs() {
-	return currentJobs.empty();
+	return !currentJobs.empty();
 }
 
 void printMenu() {
