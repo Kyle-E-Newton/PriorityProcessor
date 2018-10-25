@@ -32,20 +32,16 @@ int main(void) {
 				}
 				break;
 			case 2:
-				//cout << "Option 2" << "\n";
 				break;
 			case 3:
-				//cout << "Option 3" << "\n";
 				loader.printActiveJobs();
 				cin.ignore().get();
 				break;
 			case 4:
-				//cout << "Option 4" << "\n";
 				loader.printAllJobs(loader.getJobQueue());
 				cin.ignore().get();
 				break;
 			case 5:
-				//cout << "Option 5" << "\n";
 				showMenu = false;
 				break;
 			default:
