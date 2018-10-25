@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "queue.hpp"
 
 //Main constructor. Takes in an ID, Description, How many processors needed and how many Ticks are needed to complete the 
 //Process. This is just a basic constructore and doesn't do anything else

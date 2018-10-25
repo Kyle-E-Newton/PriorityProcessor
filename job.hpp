@@ -1,5 +1,5 @@
 #pragma once
-#include "main.hpp"
+#include "queue.hpp"
 
 //This Class is a container to contain the Jobs that are being inputted into either storage structure
 class Job {

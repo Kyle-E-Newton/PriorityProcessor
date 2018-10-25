@@ -1,17 +1,51 @@
 #include "queue.hpp"
 
+
+void testLoader::tick() {
+
+	cout << "Tick Number: " << totalTicks << "\n";
+	totalTicks++;
+
+	//Read from File
+	ifstream stream;
+	string readIn;
+	string description;
+	int processors, ticks;
+
+	stream.open("Input.txt", fstream::in);
+	if (canReadFromFile && stream) {
+		for (int i = 0; i < allJobs && canReadFromFile; i++) {
+			if (stream.eof()) {
+				canReadFromFile = false;
+			}
+			getline(stream, readIn);
+		}
+
+		char* str = _strdup(readIn.c_str());
+		description = strtok(str, " ");
+		processors = stoi(strtok(str, " "));
+		ticks = stoi(strtok(str, " "));
+		cout << description << processors << ticks << "\n";
+	}
+
+
+
+	activatejob();
+	decrementJobs();
+}
 /*
-int main(void) {
+void testLoader::tick() {
 
     bool isRunning = true;
 	bool showMenu = true;
-    int choice;
-
-    testLoader loader(15);
+    int choice, tickTimer = 0;
 
     while(isRunning) {
         std::string description;
         int processors, ticks;
+
+		cout << "\nTick Number :" << tickTimer << "\n";
+
 		if (showMenu) {
 			printMenu();
 			cin >> choice;
@@ -24,8 +58,8 @@ int main(void) {
 				cin >> processors;
 				cout << "Enter the Number of Ticks Needed: ";
 				cin >> ticks;
-				if (loader.checkValidity(processors)) {
-					loader.insertJob(loader.getNumJobs(), description, processors, ticks);
+				if (checkValidity(processors)) {
+					insertJob(totalJobs, description, processors, ticks);
 					break;
 				}
 				else {
@@ -35,11 +69,11 @@ int main(void) {
 			case 2:
 				break;
 			case 3:
-				loader.printActiveJobs();
+				printActiveJobs();
 				cin.ignore().get();
 				break;
 			case 4:
-				loader.printAllJobs(loader.getJobQueue());
+				printAllJobs(jobs);
 				cin.ignore().get();
 				break;
 			case 5:
@@ -49,12 +83,11 @@ int main(void) {
 				cout << "Invalid Option" << "\n";
 			}
 		}
-		if (!loader.hasActiveJobs() && loader.getJobQueue().empty())
+		if (!hasActiveJobs() && jobs.empty())
 			isRunning = false;
-        loader.decrementJobs();
-        loader.activatejob();
+        decrementJobs();
+        activatejob();
     }
-    return 0;
 }
 */
 
@@ -62,6 +95,9 @@ int main(void) {
 testLoader::testLoader(int numProcessors) {
     this->totalProcessors = numProcessors;
     this->usedProcessors = 0;
+	this->totalTicks = 0;
+	this->allJobs = 0;
+	this->canReadFromFile = true;
 }
 
 //Inserts a job into the storage queue
@@ -141,6 +177,7 @@ void testLoader::decrementJobs() {
 				cout << "Job #" << it->getID() << " is finished\n";
 				usedProcessors -= it->getProcessorsNeeded();
 				it = currentJobs.erase(it);
+				totalJobs--;
 			}
 			else
 				++it;

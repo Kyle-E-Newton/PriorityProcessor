@@ -1,10 +1,12 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <queue>
 #include <vector>
 #include <string>
 #include <list>
 #include <functional>
+#include <fstream>
 
 #include "job.hpp"
 
@@ -25,6 +27,7 @@ class testLoader {
         void decrementJobs();
         void activatejob();
 		bool hasActiveJobs();
+		void tick();
     private:
         priority_queue<Job, vector<Job>, greater<Job>> jobs;
         vector<Job> currentJobs;
@@ -32,4 +35,7 @@ class testLoader {
     int totalProcessors;
     int usedProcessors;
     int totalJobs;
+	int totalTicks;
+	int allJobs;
+	bool canReadFromFile;
 };
