@@ -7,6 +7,7 @@
 #include <list>
 #include <functional>
 #include <fstream>
+#include <sstream>
 
 #include "job.hpp"
 

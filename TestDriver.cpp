@@ -8,4 +8,7 @@ int main(void) {
 	testLoader loader(10);
 
 	loader.tick();
+
+	int test;
+	cin >> test;
 }

@@ -8,24 +8,17 @@ void testLoader::tick() {
 
 	//Read from File
 	ifstream stream;
-	string readIn;
-	string description;
-	int processors, ticks;
+	std::string readIn;
+	std::string description;
+	int processors, ticks, counter = 0;
 
 	stream.open("Input.txt", fstream::in);
-	if (canReadFromFile && stream) {
-		for (int i = 0; i < allJobs && canReadFromFile; i++) {
-			if (stream.eof()) {
-				canReadFromFile = false;
-			}
-			getline(stream, readIn);
-		}
 
-		char* str = _strdup(readIn.c_str());
-		description = strtok(str, " ");
-		processors = stoi(strtok(str, " "));
-		ticks = stoi(strtok(str, " "));
-		cout << description << processors << ticks << "\n";
+	std::stringstream	linestream(readIn);
+
+	while (getline(linestream, readIn, ' ')) {
+		linestream >> description >> processors >> ticks;
+		cout << description << " " << processors << " " << ticks << "\n";
 	}
 
 
