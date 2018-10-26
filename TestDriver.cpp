@@ -10,8 +10,14 @@ int main(void) {
 	testLoader loader(10);
 	while (isRunning) {
 		loader.tick();
-		if (!loader.hasActiveJobs()) {
+		//Have 
+		//No Jobs in Active Queue
+		//No Jobs in Storage Queue
+		if (!loader.getJobQueue().empty() && !loader.activeJobs()) {
 			isRunning = false;
 		}
+		system("PAUSE");
+		
 	}
+	
 }

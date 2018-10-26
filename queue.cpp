@@ -4,26 +4,34 @@
 void testLoader::tick() {
 
 	cout << "Tick Number: " << totalTicks << "\n";
-	totalTicks++;
 
 	//Read from File
 	ifstream stream;
 	stream.open("Input.txt", ios::in);
 	std::string readIn;
 	std::string description = "";
-	int processors, ticks, counter = 0;
+	int processors = 0, ticks = 0, counter = 0;
 
-	for (int i = 0; i <= totalTicks && !stream.eof(); i++) {
-		if (i = totalTicks) {
+	while (counter <= totalTicks) {
+		if (counter == totalTicks) {
 			stream >> description >> processors >> ticks;
 		}
+		counter++;
 	}
+
+	//for (int i = 0; i < totalTicks; i++) {
+	//	if (i == totalTicks) {
+	//		stream >> description >> processors >> ticks;
+	//	}
+	//}
 	if(checkValidity(processors)) {
 		insertJob(totalJobs, description, processors, ticks);
 	}
 
 	activatejob();
 	decrementJobs();
+
+	totalTicks++;
 }
 /*
 void testLoader::tick() {
@@ -164,7 +172,7 @@ void testLoader::activatejob() {
 void testLoader::decrementJobs() {
 	vector<Job>::iterator it = currentJobs.begin();
 
-	if (hasActiveJobs()) {
+	if (activeJobs()) {
 		for (; it != currentJobs.end(); ) {
 			if (it->removeTick()) {
 				cout << "Job #" << it->getID() << " is finished\n";
@@ -178,9 +186,9 @@ void testLoader::decrementJobs() {
 	}
 }
 
-//Returns true if the active jobs list is not empty
-bool testLoader::hasActiveJobs() {
-	return !currentJobs.empty();
+//Returns true if there are no active jobs
+bool testLoader::activeJobs() {
+	return currentJobs.empty();
 }
 
 //Prints Menu
