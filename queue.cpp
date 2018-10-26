@@ -19,11 +19,6 @@ void testLoader::tick() {
 		counter++;
 	}
 
-	//for (int i = 0; i < totalTicks; i++) {
-	//	if (i == totalTicks) {
-	//		stream >> description >> processors >> ticks;
-	//	}
-	//}
 	if(checkValidity(processors)) {
 		insertJob(totalJobs, description, processors, ticks);
 	}
@@ -102,7 +97,7 @@ testLoader::testLoader(int numProcessors) {
 
 //Inserts a job into the storage queue
 bool testLoader::insertJob(int ID, std::string description, int processors, int ticks) {
-	cout << "Inserting Job #" << ID << "\n";
+	cout << "Inserting Job #" << ID << " With Description " << description << "\n";
     Job newJob(ID, description, processors, ticks);
     this->totalJobs++;
     jobs.push(newJob);
