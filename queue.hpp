@@ -3,7 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <vector>
-#include <string>
+#include <string.h>
 #include <list>
 #include <functional>
 #include <fstream>

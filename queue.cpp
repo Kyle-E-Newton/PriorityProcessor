@@ -8,20 +8,19 @@ void testLoader::tick() {
 
 	//Read from File
 	ifstream stream;
+	stream.open("Input.txt", ios::in);
 	std::string readIn;
-	std::string description;
+	std::string description = "";
 	int processors, ticks, counter = 0;
 
-	stream.open("Input.txt", fstream::in);
-
-	std::stringstream	linestream(readIn);
-
-	while (getline(linestream, readIn, ' ')) {
-		linestream >> description >> processors >> ticks;
-		cout << description << " " << processors << " " << ticks << "\n";
+	for (int i = 0; i <= totalTicks && !stream.eof(); i++) {
+		if (i = totalTicks) {
+			stream >> description >> processors >> ticks;
+		}
 	}
-
-
+	if(checkValidity(processors)) {
+		insertJob(totalJobs, description, processors, ticks);
+	}
 
 	activatejob();
 	decrementJobs();
@@ -95,6 +94,7 @@ testLoader::testLoader(int numProcessors) {
 
 //Inserts a job into the storage queue
 bool testLoader::insertJob(int ID, std::string description, int processors, int ticks) {
+	cout << "Inserting Job #" << ID << "\n";
     Job newJob(ID, description, processors, ticks);
     this->totalJobs++;
     jobs.push(newJob);

@@ -5,10 +5,13 @@ int main(void) {
 
 	//Read from file
 
+	bool isRunning = true;
+
 	testLoader loader(10);
-
-	loader.tick();
-
-	int test;
-	cin >> test;
+	while (isRunning) {
+		loader.tick();
+		if (!loader.hasActiveJobs()) {
+			isRunning = false;
+		}
+	}
 }
